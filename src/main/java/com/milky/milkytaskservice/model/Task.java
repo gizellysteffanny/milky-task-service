@@ -30,6 +30,9 @@ public class Task {
   @Builder.Default
   private boolean completed = false;
   @CreatedDate
-  @Field(name = "created_at", targetType = FieldType.DATE_TIME)
   private Date createdAt;
+
+  @NotNull
+  @NotBlank
+  private String user;
 }
