@@ -21,16 +21,23 @@ O Milky Task Service é um microserviço dedicado à gestão de tarefas no aplic
 Certifique-se de ter as seguintes ferramentas instaladas antes de prosseguir:
 
 - Java Development Kit (JDK) 8 ou superior
-- MongoDB (servidor em execução)
+- Docker (para configurar o ambiente com Docker Compose)
 
 ## 📦 Instalação
 
 1. Clone este repositório para a sua máquina local.
-2. Configure as propriedades do MongoDB em `src/main/resources/application.properties`.
-3. Execute o aplicativo com o seguinte comando:
-  ```sh
-   ./mvnw spring-boot:run
-  ```
+2. Execute `mvn clean install` para instalar as dependências.
+3. Configure as propriedades do MongoDB em `src/main/resources/application.properties`.
+4. Configure o banco de dados MongoDB com Docker Compose:
+    - Abra um terminal na pasta raiz do projeto e execute o comando:
+      ```sh
+        docker-compose up -d
+      ```
+    - Para acessar o banco com o Studio 3T:
+      ```
+      mongodb://milky_task_db_user:PASSWORD@localhost:27017/milky_task_db?authSource=admin
+      ```
+5. Execute `./mvnw spring-boot:run` para iniciar o microserviço.
 
 ## 🌐 Endpoints
 
