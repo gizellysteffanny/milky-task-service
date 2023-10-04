@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TaskDTO {
+  private String id;
   @NotBlank
   @NotNull
   private String title;
