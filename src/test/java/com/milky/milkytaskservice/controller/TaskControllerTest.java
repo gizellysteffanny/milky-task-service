@@ -49,4 +49,24 @@ public class TaskControllerTest {
 
         Assertions.assertEquals(HttpStatus.CREATED, createdTask.getStatusCode());
     }
+
+    @Test
+    @DisplayName("should be able to update a task")
+    public void updateTask() {
+        String user = "1";
+        TaskDTO taskDTO = TaskDTO.builder()
+                .title("task title")
+                .description("task description")
+                .completed(false)
+                .build();
+
+        when(taskService.update(taskDTO, "1", user)).thenReturn(taskDTO);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        ResponseEntity<TaskDTO> updatedTask = taskController.update("1", taskDTO, user);
+
+        Assertions.assertEquals(HttpStatus.OK, updatedTask.getStatusCode());
+    }
 }

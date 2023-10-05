@@ -48,7 +48,11 @@ public class TaskService {
 
     taskUserValidator.userCanUpdateTask(user, task.getUser());
 
-    Task savedTask = taskRepository.save(taskMapper.toEntity(taskDTO));
+    task.setTitle(taskDTO.getTitle());
+    task.setDescription(taskDTO.getDescription());
+    task.setCompleted(taskDTO.isCompleted());
+
+    Task savedTask = taskRepository.save(task);
     log.info("Task updated: {}", savedTask);
     return taskMapper.toDTO(savedTask);
   }

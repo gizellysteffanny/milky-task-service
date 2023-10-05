@@ -2,128 +2,258 @@
 	"info": {
 		"_postman_id": "4b97d4f4-0f77-4ee9-bfc1-996c0ead3435",
 		"name": "Milky Task Service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "2345695",
 		"_collection_link": "https://cloudy-moon-6008.postman.co/workspace/Milky-Taskscape~ba8a10c8-babb-4296-b0b6-3e8fa0e9e5a9/collection/2345695-4b97d4f4-0f77-4ee9-bfc1-996c0ead3435?action=share&source=collection_link&creator=2345695"
 	},
 	"item": [
 		{
-			"name": "Create a Task - SUCCESS",
-			"event": [
+			"name": "CRATE A TASK",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Body matches json\", function () {\r",
-							"    var response = pm.response.json();\r",
-							"\r",
-							"    pm.expect(response).haveOwnProperty(\"id\");\r",
-							"    pm.expect(response?.title).equal(\"Task 1\");\r",
-							"    pm.expect(response?.description).equal(\"Task description\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "user",
-						"value": "1",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Task 1\",\r\n    \"description\": \"Task description\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Create a Task - SUCCESS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches json\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).haveOwnProperty(\"id\");\r",
+									"    pm.expect(response?.title).equal(\"Task 1\");\r",
+									"    pm.expect(response?.description).equal(\"Task description\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/v1/tasks",
-					"host": [
-						"{{BASE_URL}}"
 					],
-					"path": [
-						"v1",
-						"tasks"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task 1\",\r\n    \"description\": \"Task description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/v1/tasks"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Task - ERROR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches json\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).haveOwnProperty(\"errors\");\r",
+									"\r",
+									"    pm.expect(response?.errors[0]?.field).equal(\"title\");\r",
+									"    pm.expect(response?.errors[0]?.defaultMessage).equal(\"não deve ser nulo\");\r",
+									"\r",
+									"    pm.expect(response?.errors[1]?.field).equal(\"title\");\r",
+									"    pm.expect(response?.errors[1]?.defaultMessage).equal(\"não deve estar em branco\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Task description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/v1/tasks"
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Create a Task - ERROR",
-			"event": [
+			"name": "UPDATE A TASK",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Body matches json\", function () {\r",
-							"    var response = pm.response.json();\r",
-							"\r",
-							"    pm.expect(response).haveOwnProperty(\"errors\");\r",
-							"\r",
-							"    pm.expect(response?.errors[0]?.field).equal(\"title\");\r",
-							"    pm.expect(response?.errors[0]?.defaultMessage).equal(\"não deve ser nulo\");\r",
-							"\r",
-							"    pm.expect(response?.errors[1]?.field).equal(\"title\");\r",
-							"    pm.expect(response?.errors[1]?.defaultMessage).equal(\"não deve estar em branco\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "user",
-						"value": "1",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Task description\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Update a Task - SUCCESS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches json\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response).haveOwnProperty(\"id\");\r",
+									"    pm.expect(response?.title).equal(\"Task test\");\r",
+									"    pm.expect(response?.description).equal(\"Task description updated\");\r",
+									"    pm.expect(response?.completed).equal(true);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}/v1/tasks",
-					"host": [
-						"{{BASE_URL}}"
 					],
-					"path": [
-						"v1",
-						"tasks"
-					]
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task test\",\r\n    \"description\": \"Task description updated\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/v1/tasks/651e1c25089968048def89b9"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Task - ERROR [USER INVALID]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Return error message\", function () {\r",
+									"    var response = pm.response.text();\r",
+									"\r",
+									"    pm.expect(response).equal(\"User not allowed to update this task\");;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task test\",\r\n    \"description\": \"Task description updated\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/v1/tasks/651e1c25089968048def89b9"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Task - ERROR [TASK NOT FOUND]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches json\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response?.error).equal(\"Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Task test\",\r\n    \"description\": \"Task description updated\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/v1/tasks/651e1c25089968048def89b8"
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
