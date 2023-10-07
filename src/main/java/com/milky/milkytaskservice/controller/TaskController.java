@@ -31,4 +31,10 @@ public class TaskController {
         log.info("POST /api/v1/tasks -> create task from user({})", user);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(task, user));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskDTO> update(@PathVariable("id") String id, @RequestBody @Valid TaskDTO task, @RequestHeader(required = true, name = "user") @NotNull @NotBlank String user) {
+        log.info("PUT /api/v1/tasks/{} -> update task from user({})", id, user);
+        return ResponseEntity.ok(taskService.update(task, id, user));
+    }
 }
